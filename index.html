@@ -15,7 +15,21 @@
     <link rel="stylesheet" href="./assets/css/style.css"/>
 </head>
 <body>
-    <header class="bg-dark p-2 text-center"><h1>Weather Dashboard</h1></header>
+    <header class="bg-dark p-2 text-light text-center"><h1>Weather Dashboard</h1></header>
+    <aside id="button-section" class="row">
+        <section class="col-3 my-3">
+            <h4>Search for a City: </h4>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Input group example" aria-label="Input group example" aria-describedby="btnGroupAddon">
+                <div class="input-group-text" id="btnGroupAddon"><i class="fas fa-search"></i></div>
+                <div class="btn-group-vertical"><!--buttons generate here--></div>
+              </div>
+        </section>
+    </aside>
+    <main class="row">
+        <section id="searchResults" class="col-9"><!--Main dashboard will go here--></section>
+        <section id="fiveDay" class="col-9"><!--5 day forcast will go here--></section>
+    </main>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
