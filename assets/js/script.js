@@ -9,26 +9,22 @@ var cities = [];
 
 
 $(document).ready(function(){
-    var storedCities = JSON.parse(localStorage.getItem('buttons'))|| [];
-    console.log(storedCities);
-    makeButtons(storedCities);
+    var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
+    console.log(cities);
+    makeButtons(cities);
 });
 
-function makeButtons(arr){
+function makeButtons(cities){
      $("#btnList").empty();
 
- for(var i = 0; i < arr.length; i++){
+ for(var i = 0; i < cities.length; i++){
     var btnEl = $("<button>");
-    btnEl.addClass("city text-center btn btn-primary");
-    btnEl.attr("data-name", arr[i]);
+    btnEl.addClass("city text-center btn btn-secondary");
+    btnEl.attr("data-name", cities[i]);
     btnEl.attr("type", "button")
-    btnEl.text(arr[i]);
+    btnEl.text(cities[i]);
     
-     
     $("#btnList").prepend(btnEl);
-
-    
-   
 
     localStorage.setItem("buttons", JSON.stringify(cities));
     
@@ -37,6 +33,8 @@ function makeButtons(arr){
 
 $("#searchBtn").on("click", function(e){
     e.preventDefault;
+    var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
+    console.log(cities);
     
     var btnName = $("#input").val().trim();
     cities.push(btnName);
