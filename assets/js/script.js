@@ -4,29 +4,34 @@ var weatherURL = "api.openweathermap.org/data/2.5/forecast?q="+"{city name}"+"&u
 //for use in calling API to get UV index.  This call should be chained off the first
 var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat="+"{lat}"+"&lon="+"{lon}"+"&appid="+key;
 
-var btnArr = [];
+var cities = [];
+
+
+
+function makeButtons(){
+     $("#btnList").empty();
+
+ for(var i = 0; i < cities.length; i++){
+    var btnEl = $("<button>");
+    btnEl.addClass("city");
+    btnEl.attr("data-name", cities[i]);
+    btnEl.text(cities[i]);
+    console.log(btnEl);
+     
+    $("#btnList").append(btnEl);
+    
+ };
+};
 
 $("#searchBtn").on("click", function(e){
     e.preventDefault;
     
     var btnName = $("#input").val().trim();
-    btnArr.push(btnName);
-    console.log(btnArr[0]);
-    // createButtons();
+    cities.push(btnName);
+    console.log(cities[0]);
+    
     $("#input").val("");
+   makeButtons(); 
 });
 
-function createButtons() {
-
- for(var i = 0; i < btnArr.length; i++){
-    var btnList = $("#btnList");
-    var btnEl = $("<button>");
-    var btnName = btnEl.text($("input").val().trim());
-     
-    btnArr.push(btnName)
-    btnList.prepend(btnEl);
-    
-
- };
-
-};
+makeButtons();
