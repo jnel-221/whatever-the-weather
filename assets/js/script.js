@@ -1,7 +1,7 @@
 
 
 //for use in calling API to get UV index.  This call should be chained off the first
-// var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat="+"{lat}"+"&lon="+"{lon}"+"&appid="+key;
+// 
 
 var cities = [];
 
@@ -25,15 +25,27 @@ function callOpenWeather (){
         url: queryURL,
         method: "GET"
       }).then(function(response){
+        //send response to renderMain & renderForecast functions
+        
 
-        console.log(response);
+        //create variables for 2nd API call
+        var lat = response.city.coord.lat;
+        var lon = response.city.coord.lon;
+        console.log(lat,lon);
+        var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat="+lat+"&lon="+lon+"&appid="+key;
 
-
+        $.ajax({
+          url: uvURL,
+          method: "GET"
+        }).then(function(data){
+          console.log(data.value);
+          //send data to renderUV function
       });
-
+      
+      });
     
 
-}
+};
 
 
 function makeButtons(cities){
