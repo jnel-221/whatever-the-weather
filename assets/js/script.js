@@ -8,25 +8,29 @@ var cities = [];
 
 
 
+$(document).ready(function(){
+    var storedCities = JSON.parse(localStorage.getItem('buttons'))|| [];
+    console.log(storedCities);
+    makeButtons(storedCities);
+});
 
-
-function makeButtons(){
+function makeButtons(arr){
      $("#btnList").empty();
 
- for(var i = 0; i < cities.length; i++){
+ for(var i = 0; i < arr.length; i++){
     var btnEl = $("<button>");
     btnEl.addClass("city text-center btn btn-primary");
-    btnEl.attr("data-name", cities[i]);
+    btnEl.attr("data-name", arr[i]);
     btnEl.attr("type", "button")
-    btnEl.text(cities[i]);
-    console.log(btnEl);
+    btnEl.text(arr[i]);
+    
      
     $("#btnList").prepend(btnEl);
 
     
-    console.log(cities);
+   
 
-    localStorage.setItem("buttons", cities)
+    localStorage.setItem("buttons", JSON.stringify(cities));
     
  };
 };
@@ -36,10 +40,9 @@ $("#searchBtn").on("click", function(e){
     
     var btnName = $("#input").val().trim();
     cities.push(btnName);
-    console.log(cities[0]);
     
     $("#input").val("");
-   makeButtons(); 
+   makeButtons(cities); 
 });
 
-makeButtons();
+makeButtons(cities);
