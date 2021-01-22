@@ -1,4 +1,5 @@
 h4,
-input {
+.input-group,
+#btnList {
   padding-left: 15px;
 }

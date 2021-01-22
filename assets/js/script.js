@@ -13,8 +13,9 @@ function makeButtons(){
 
  for(var i = 0; i < cities.length; i++){
     var btnEl = $("<button>");
-    btnEl.addClass("city");
+    btnEl.addClass("city text-center btn btn-primary");
     btnEl.attr("data-name", cities[i]);
+    btnEl.attr("type", "button")
     btnEl.text(cities[i]);
     console.log(btnEl);
      
