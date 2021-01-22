@@ -8,6 +8,8 @@ var cities = [];
 
 
 
+
+
 function makeButtons(){
      $("#btnList").empty();
 
@@ -19,7 +21,12 @@ function makeButtons(){
     btnEl.text(cities[i]);
     console.log(btnEl);
      
-    $("#btnList").append(btnEl);
+    $("#btnList").prepend(btnEl);
+
+    
+    console.log(cities);
+
+    localStorage.setItem("buttons", cities)
     
  };
 };
