@@ -3,3 +3,24 @@ h4,
 #btnList {
   padding-left: 15px;
 }
+
+/* UV Index classes */
+.moderate {
+  background-color: yellow;
+  color: black;
+}
+
+.high {
+  background-color: orange;
+  color: black;
+}
+
+.veryHigh {
+  background-color: red;
+  color: white;
+}
+
+.extreme {
+  background-color: rgb(146, 11, 146);
+  color: white;
+}
