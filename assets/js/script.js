@@ -6,7 +6,6 @@ var cities = [];
 
 $(document).ready(function(){
     var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
-    console.log(cities);
     makeButtons(cities);
 });
 
@@ -15,8 +14,6 @@ function callOpenWeather (){
     var thisCityName =$(this).data('name');
     var key = "13a8c1580f78868c2f813ca69b36b2cf"
     var queryURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?q="+thisCityName+"&units=imperial&appid="+key;
-    console.log(thisCityName);
-    
     
     $.ajax({
         url: queryURL,
@@ -44,9 +41,9 @@ function callOpenWeather (){
 
 };
 
-function renderMain(response,data){
+function renderMain(response){
   $('#searchResults').empty()
-console.log(response);
+
 var cityEl = $("<h2>");
 var citySpanEl = $("<span>");
 var tempEl = $("<p>");
@@ -65,9 +62,9 @@ var wind = (Math.round(response.wind.speed)+" mph");
 
 cityEl.text(name+" "+date);
 imgEl.attr({"src":iconURL, "alt": "weather icon"})
-tempEl.text(temp);
-humidEl.text(humid);
-windEl.text(wind);
+tempEl.text("Temperature: "+temp);
+humidEl.text("Humidity: "+humid);
+windEl.text("Wind-speed: "+wind);
 
 
  $("#searchResults").append(cityEl, imgEl, tempEl, humidEl, windEl);
@@ -75,8 +72,14 @@ windEl.text(wind);
 };
 
 function renderForecast(data){
-console.log(data);
+console.log(data); 
+var UVI= "UV Index: "+data.current.uvi;
 var uvEl = $("<p>");
+
+uvEl.append(UVI);
+$("#searchResults").append(uvEl);
+
+
 };
 
 function makeButtons(cities){
