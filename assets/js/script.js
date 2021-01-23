@@ -52,13 +52,13 @@ var humidEl = $("<p>");
 var windEl = $("<p>");
 var imgEl = $("<img>");
 
-var name = (response.name);
+var name = response.name;
 var date = moment(response.dt, "X").format("L");
-var icon = (response.weather[0].icon);
+var icon = response.weather[0].icon;
 var iconURL = "http://openweathermap.org/img/wn/"+icon+"@2x.png"
-var temp = (Math.round(response.main.temp)+" °F");
-var humid = (response.main.humidity+" %");
-var wind = (Math.round(response.wind.speed)+" mph");
+var temp = Math.round(response.main.temp)+" °F";
+var humid = response.main.humidity+" %";
+var wind = Math.round(response.wind.speed)+" mph";
 
 
 cityEl.text(name+" "+date);
@@ -92,7 +92,6 @@ function uvColor(uvVal, uvEl){
 
 }
 function renderForecast(data){
- console.log(data);
  $("#fiveDay").empty();
  $("#title").text("Five Day Forecast");
   
@@ -106,11 +105,8 @@ function renderForecast(data){
   var unixDate = data.daily[i].dt;
   var calDate = moment(unixDate, "X").format('L');
   var forecastIcon = data.daily[i].weather[0].icon;
-  console.log(forecastIcon) 
-  var iconURL = "http://openweathermap.org/img/wn/"+forecastIcon+"@2x.png"
-   console.log(iconURL);
-  ;
-  var forecastTemp = "Temp: "+data.daily[i].temp.max+" °F";
+  var iconURL = "http://openweathermap.org/img/wn/"+forecastIcon+"@2x.png";
+  var forecastTemp = "Temp: "+Math.round(data.daily[i].temp.max)+" °F";
   var forecastHumid = "Humidity: "+data.daily[i].humidity+" %";
 
    dateEl.text(calDate);
