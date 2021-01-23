@@ -33,6 +33,7 @@ function callOpenWeather (){
           method: "GET"
         }).then(function(data){
           //send data to renderUV function
+          renderUV(data);
           renderForecast(data);
       });
       
@@ -71,15 +72,56 @@ windEl.text("Wind-speed: "+wind);
 
 };
 
+function renderUV(data){
+  var uvVal= data.current.uvi;
+  var UVI= "UV Index: "+uvVal;
+  var uvEl = $("<p>");
+  
+  uvEl.append(UVI);
+  $("#searchResults").append(uvEl);
+  
+  uvColor(uvVal, uvEl);
+}
+//needs some thought; take a look at how element is constructed and rebuild render UV and color functionality
+function uvColor(uvVal, uvEl){
+  // console.log(typeof uvVal)
+  // console.log(uvEl);
+  if(uvVal >= 3 && uvVal <= 5){
+    uvEl.addClass('.moderate');
+  }
+
+}
 function renderForecast(data){
-console.log(data); 
-var UVI= "UV Index: "+data.current.uvi;
-var uvEl = $("<p>");
+ console.log(data);
+ $("#fiveDay").empty();
+ $("#title").text("Five Day Forecast");
+  
+ for(var i = 1; i < 6; i++){
+  var forecastCard = $("<div class='col bg-info p-2 m-2'>") 
+  var dateEl = $("<h5>");
+  var iconEl = $("<img>");
+  var tempEl = $("<p>");
+  var humidEl = $("<p>");
+  
+  var unixDate = data.daily[i].dt;
+  var calDate = moment(unixDate, "X").format('L');
+  var forecastIcon = data.daily[i].weather[0].icon;
+  console.log(forecastIcon) 
+  var iconURL = "http://openweathermap.org/img/wn/"+forecastIcon+"@2x.png"
+   console.log(iconURL);
+  ;
+  var forecastTemp = "Temp: "+data.daily[i].temp.max+" °F";
+  var forecastHumid = "Humidity: "+data.daily[i].humidity+" %";
 
-uvEl.append(UVI);
-$("#searchResults").append(uvEl);
-
-
+   dateEl.text(calDate);
+   iconEl.attr({"src": iconURL, "alt": "weather icon"});
+   tempEl.text(forecastTemp);
+   humidEl.text(forecastHumid);
+  
+   forecastCard.append(dateEl, iconEl, tempEl, humidEl);
+   $("#fiveDay").append(forecastCard);
+   
+ }
 };
 
 function makeButtons(cities){
