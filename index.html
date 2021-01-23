@@ -15,25 +15,25 @@
 </head>
 <body>
     <header class="bg-dark p-2 text-light text-center"><h1>Weather Dashboard</h1></header>
-    <aside  class="row">
+    <main  class="row">
         <section id="button-section" class="col-3 my-3">
             <h4>Search for a City: </h4>
             <div class="input-group">
                 <input id="input" type="text" class="form-control" placeholder="Enter City Name" aria-label="Input group example" aria-describedby="btnGroupAddon">
                 <button id="searchBtn" class="btn btn-info" type="button"><i class="fas fa-search"></i></button>
-              </div>
+            </div>
               <div id="btnList" class="btn-group-vertical mt-3 d-flex"><!--buttons generate here--></div>
-            </section> 
-        <section id="searchResults" class="col-9 my-3"><!--Main dashboard will go here-->
+        </section>
+        <div class="col-9 my-3">
+        <section id="searchResults" ><!--Main dashboard will go here-->
         <p id="uvBox"></p>
         </section>
         <section class="col-9">
             <h4 id="title"></h4>
             <div id="fiveDay" class="row "><!--5 day forcast will go here--></div>
         </section>
-    
-        
-    </aside>
+        </div>
+    </main>
     
         
 
