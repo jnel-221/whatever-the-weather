@@ -1,8 +1,5 @@
 
 
-//for use in calling API to get UV index.  This call should be chained off the first
-// 
-
 var cities = [];
 
 
@@ -26,20 +23,20 @@ function callOpenWeather (){
         method: "GET"
       }).then(function(response){
         //send response to renderDashboard function
-        renderDashboard(response);
+        renderMain(response);
 
         //create variables for 2nd API call
         var lat = response.coord.lat;
         var lon = response.coord.lon;
        
-        var uvURL = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=minutely,hourly,alerts&appid="+key;
+        var uvURL = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=minutely,hourly,alerts&units=imperial&appid="+key;
 
         $.ajax({
           url: uvURL,
           method: "GET"
         }).then(function(data){
           //send data to renderUV function
-          renderUV(data);
+          renderForecast(data);
       });
       
     });
@@ -47,22 +44,46 @@ function callOpenWeather (){
 
 };
 
-function renderDashboard(response){
+function renderMain(response,data){
   $('#searchResults').empty()
-console.log(response)
+console.log(response);
+var cityEl = $("<h2>");
+var citySpanEl = $("<span>");
+var tempEl = $("<p>");
+var humidEl = $("<p>");
+var windEl = $("<p>");
+var imgEl = $("<img>");
 
+var name = (response.name);
+var date = moment(response.dt, "X").format("L");
+var icon = (response.weather[0].icon);
+var iconURL = "http://openweathermap.org/img/wn/"+icon+"@2x.png"
+var temp = (Math.round(response.main.temp)+" °F");
+var humid = (response.main.humidity+" %");
+var wind = (Math.round(response.wind.speed)+" mph");
+
+
+cityEl.text(name+" "+date);
+imgEl.attr({"src":iconURL, "alt": "weather icon"})
+tempEl.text(temp);
+humidEl.text(humid);
+windEl.text(wind);
+
+
+ $("#searchResults").append(cityEl, imgEl, tempEl, humidEl, windEl);
 
 };
 
-function renderUV(data){
+function renderForecast(data){
 console.log(data);
+var uvEl = $("<p>");
 };
 
 function makeButtons(cities){
  $("#btnList").empty();
  for(var i = 0; i < cities.length; i++){
     var btnEl = $("<button>");
-    btnEl.addClass("city text-center btn btn-secondary");
+    btnEl.addClass("city text-center btn btn-outline-secondary form-control");
     btnEl.attr("data-name", cities[i]);
     btnEl.attr("type", "button")
     btnEl.text(cities[i]);

@@ -15,20 +15,22 @@
 </head>
 <body>
     <header class="bg-dark p-2 text-light text-center"><h1>Weather Dashboard</h1></header>
-    <aside id="button-section" class="row">
-        <section class="col-3 my-3">
+    <aside  class="row">
+        <section id="button-section" class="col-3 my-3">
             <h4>Search for a City: </h4>
             <div class="input-group">
                 <input id="input" type="text" class="form-control" placeholder="Enter City Name" aria-label="Input group example" aria-describedby="btnGroupAddon">
                 <button id="searchBtn" class="btn btn-info" type="button"><i class="fas fa-search"></i></button>
               </div>
-              <div id="btnList" class="btn-group-vertical mt-3"><!--buttons generate here--></div>
-        </section>
-    </aside>
-    <main class="row">
-        <section id="searchResults" class="col-9"><!--Main dashboard will go here--></section>
+              <div id="btnList" class="btn-group-vertical mt-3 d-flex"><!--buttons generate here--></div>
+            </section> 
+        <section id="searchResults" class="col-9 my-3"><!--Main dashboard will go here--></section>
         <section id="fiveDay" class="col-9"><!--5 day forcast will go here--></section>
-    </main>
+    
+        
+    </aside>
+    
+        
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
