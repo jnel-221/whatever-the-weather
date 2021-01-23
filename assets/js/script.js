@@ -1,17 +1,17 @@
 
-
 var cities = [];
-
-
 
 $(document).ready(function(){
     var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
+    console.log(cities[cities.length-1]);
+
+    //conditional logic, what if it's empty?--don't call it, leave it blank? call Honolulu?
+    callOpenWeather(cities[cities.length-1]);
     makeButtons(cities);
 });
 
-    
-function callOpenWeather (){
-    var thisCityName =$(this).data('name');
+function callOpenWeather (cityName){
+    var thisCityName =cityName;
     var key = "13a8c1580f78868c2f813ca69b36b2cf"
     var queryURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?q="+thisCityName+"&units=imperial&appid="+key;
     
@@ -46,7 +46,6 @@ function renderMain(response){
   $('#searchResults').empty()
 
 var cityEl = $("<h2>");
-var citySpanEl = $("<span>");
 var tempEl = $("<p>");
 var humidEl = $("<p>");
 var windEl = $("<p>");
@@ -67,7 +66,7 @@ tempEl.text("Temperature: "+temp);
 humidEl.text("Humidity: "+humid);
 windEl.text("Wind-speed: "+wind);
 
-
+ $("#searchResults").addClass("p-4");
  $("#searchResults").append(cityEl, imgEl, tempEl, humidEl, windEl);
 
 };
@@ -122,6 +121,7 @@ function renderForecast(data){
 
 function makeButtons(cities){
  $("#btnList").empty();
+ 
  for(var i = 0; i < cities.length; i++){
     var btnEl = $("<button>");
     btnEl.addClass("city text-center btn btn-outline-secondary form-control");
@@ -146,10 +146,13 @@ $("#searchBtn").on("click", function(e){
     
     $("#input").val("");
    
-   callOpenWeather(this);
+   callOpenWeather(cityName);
    makeButtons(cities); 
 
 });
-$(document).on("click", ".city", callOpenWeather);
+$(document).on("click", ".city", function(e){
+  e.preventDefault;
+  callOpenWeather($(this).text());
+});
 
 makeButtons(cities);
