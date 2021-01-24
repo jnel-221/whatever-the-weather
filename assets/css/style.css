@@ -4,6 +4,17 @@ h4,
   padding-left: 15px;
 }
 
+.mainContainer {
+  border: 3px outset orangered;
+  border-radius: 5%;
+}
+
+.radius {
+  /* border-radius: 50% 20% / 10% 40%; */
+  /* border-radius: 15% 10%; */
+  border-radius: 10% 20%;
+}
+
 /* UV Index classes */
 
 .moderate {

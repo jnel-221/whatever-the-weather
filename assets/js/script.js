@@ -3,10 +3,16 @@ var cities = [];
 
 $(document).ready(function(){
     var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
-    console.log(cities[cities.length-1]);
+    var recentCity = cities[cities.length-1];
+    console.log(typeof recentCity);
 
     //conditional logic, what if it's empty?--don't call it, leave it blank? call Honolulu?
-    callOpenWeather(cities[cities.length-1]);
+    if(typeof recentCity == "undefined"){
+      // callOpenWeather("Marrakesh");
+      return;
+    }else{
+      callOpenWeather(recentCity);
+    }
     makeButtons(cities);
 });
 
@@ -39,7 +45,6 @@ function callOpenWeather (cityName){
       
     });
     
-
 };
 
 function renderMain(response){
@@ -66,7 +71,7 @@ tempEl.text("Temperature: "+temp);
 humidEl.text("Humidity: "+humid);
 windEl.text("Wind-speed: "+wind);
 
- $("#searchResults").addClass("p-4");
+ $("#searchResults").addClass("p-4 mainContainer");
  $("#searchResults").append(cityEl, imgEl, tempEl, humidEl, windEl);
 
 };
@@ -95,7 +100,7 @@ function renderForecast(data){
  $("#title").text("Five Day Forecast");
   
  for(var i = 1; i < 6; i++){
-  var forecastCard = $("<div class='col bg-info p-2 m-2'>") 
+  var forecastCard = $("<div class='col bg-info p-2 m-2 radius'>") 
   var dateEl = $("<h5>");
   var iconEl = $("<img>");
   var tempEl = $("<p>");
