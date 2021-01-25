@@ -6,7 +6,6 @@ $(document).ready(function(){
     var recentCity = cities[cities.length-1];
     console.log(typeof recentCity);
 
-    //conditional logic, what if it's empty?--don't call it, leave it blank? call Honolulu?
     if(typeof recentCity == "undefined"){
       // callOpenWeather("Marrakesh");
       return;
@@ -85,7 +84,7 @@ function renderUV(data){
   $("#searchResults").append(uvEl);
   
   uvColor(uvVal, uvEl);
-}
+};
 //needs some thought; take a look at how element is constructed and rebuild render UV and color functionality
 function uvColor(uvVal, uvEl){
   // console.log(typeof uvVal)
@@ -94,7 +93,8 @@ function uvColor(uvVal, uvEl){
     uvEl.addClass('.moderate');
   }
 
-}
+};
+
 function renderForecast(data){
  $("#fiveDay").empty();
  $("#title").text("Five Day Forecast");
@@ -120,8 +120,7 @@ function renderForecast(data){
   
    forecastCard.append(dateEl, iconEl, tempEl, humidEl);
    $("#fiveDay").append(forecastCard);
-   
- }
+ };
 };
 
 function makeButtons(cities){
@@ -141,20 +140,24 @@ function makeButtons(cities){
  };
 };
 
+
 $("#searchBtn").on("click", function(e){
     e.preventDefault;
+
+    if ($("#input").val() != ""){
     var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
-    console.log(cities);
-    
     var cityName = $("#input").val().trim();
     cities.push(cityName);
     
     $("#input").val("");
-   
+    
    callOpenWeather(cityName);
    makeButtons(cities); 
-
+    }else{
+      return;
+    };
 });
+
 $(document).on("click", ".city", function(e){
   e.preventDefault;
   callOpenWeather($(this).text());
