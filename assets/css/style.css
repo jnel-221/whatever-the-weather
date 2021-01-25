@@ -15,21 +15,29 @@ h4,
 
 /* UV Index classes */
 .moderate {
-  background-color: yellow;
+  background: yellow;
   color: black;
+  padding: 5px;
+  border-radius: 10%;
 }
 
 .high {
   background-color: orange;
   color: black;
+  padding: 5px;
+  border-radius: 10%;
 }
 
 .veryHigh {
   background-color: red;
   color: white;
+  padding: 5px;
+  border-radius: 10%;
 }
 
 .extreme {
   background-color: rgb(146, 11, 146);
   color: white;
+  padding: 5px;
+  border-radius: 10%;
 }

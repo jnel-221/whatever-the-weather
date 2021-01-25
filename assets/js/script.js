@@ -4,10 +4,8 @@ var cities = [];
 $(document).ready(function(){
     var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
     var recentCity = cities[cities.length-1];
-    console.log(typeof recentCity);
-
+ 
     if(typeof recentCity == "undefined"){
-      // callOpenWeather("Marrakesh");
       return;
     }else{
       callOpenWeather(recentCity);
@@ -77,20 +75,29 @@ windEl.text("Wind-speed: "+wind);
 
 function renderUV(data){
   var uvVal= data.current.uvi;
-  var UVI= "UV Index: "+uvVal;
+  var UVI= "UV Index: "//+uvVal;
   var uvEl = $("<p>");
+  var uvSpanEl = $("<div class='d-inline'>");
   
-  uvEl.append(UVI);
+  // uvEl.append(UVI);
+  uvEl.text(UVI).append(uvSpanEl.text(uvVal));
+  
+
   $("#searchResults").append(uvEl);
   
-  uvColor(uvVal, uvEl);
+  uvColor(uvVal, uvSpanEl);
 };
-//needs some thought; take a look at how element is constructed and rebuild render UV and color functionality
-function uvColor(uvVal, uvEl){
-  // console.log(typeof uvVal)
-  // console.log(uvEl);
+
+function uvColor(uvVal, uvSpanEl){
+  
   if(uvVal >= 3 && uvVal <= 5){
-    uvEl.addClass('.moderate');
+    uvSpanEl.addClass('moderate');
+  }else if(uvVal >= 6 && uvVal <=7){
+    uvSpanEl.addClass('high')
+  }else if(uvVal >= 8 && uvVal <=10){
+    uvSpanEl.addClass('veryHigh')
+  }else if(uvVal > 11){
+    uvSpanEl.addClass('extreme')
   }
 
 };
