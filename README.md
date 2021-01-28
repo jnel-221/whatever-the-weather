@@ -10,7 +10,7 @@ This application utilizes the OpenWeatherMap and Moment.js APIs, HTML, CSS, and 
 
 After entering a city name into the input field and clicking the search icon, the application returns the current weather and forecast for that city. City names are stored in the browser's local storage and in buttons beneath the input-field.
 
-On clicking a button with a saved search-value, the application will return current weather information for the saved location. Should the user close and re-open the application or refresh the browser, data from the most recent city searched will display.
+On clicking a button with a saved search-value, the application will return current weather information for the saved location. Should the user close and re-open the application or refresh the browser, data from the most recent city searched will display in the dashboard, and buttons with previous search-values will display in the sidebar.
 
 All previous searches will be saved until the user clears their local storage.
 
