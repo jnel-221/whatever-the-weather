@@ -1,30 +1,53 @@
+var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
+//var cities = [];
 
-var cities = [];
-
+//document on ready function: pulls data from local storage and renders last city entered by user, or returns if local storage is empty
 $(document).ready(function(){
-    var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
+    //var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
     var recentCity = cities[cities.length-1];
- 
+    if (!cities.length){
+      return;
+    }
+
     if(typeof recentCity == "undefined"){
       return;
     }else{
       callOpenWeather(recentCity);
     }
-    makeButtons(cities);
+    makeButtons();
 });
 
-function callOpenWeather (cityName){
+//chained calls to Openweather API: "current weather" and "one call"
+function callOpenWeather (cityName, triggerButtons){
     var thisCityName =cityName;
     var key = "13a8c1580f78868c2f813ca69b36b2cf"
     var queryURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?q="+thisCityName+"&units=imperial&appid="+key;
+
     
     $.ajax({
         url: queryURL,
-        method: "GET"
+        method: "GET",
+        // error: function(response){
+        //   console.log(response)
+        //   var errorCode = response.responseJSON.cod;
+        //   var errorMessage =response.responseJSON.message;
+
+        //   alert(("Error "+errorCode+" "+errorMessage+". Please re-check spelling and try again."));
+        //   return;
+        // }
       }).then(function(response){
+
+        console.log(response);
+
+        // if (response.responseJSON.cod == '{"cod":"404","message":"city not found"}'){
+        //   console.log("error code 404 present!")
+        // }
         //send response to renderDashboard function
         renderMain(response);
 
+        if(triggerButtons){
+        makeButtons(response.name);
+        };
         //create variables for 2nd API call
         var lat = response.coord.lat;
         var lon = response.coord.lon;
@@ -40,10 +63,13 @@ function callOpenWeather (cityName){
           renderForecast(data);
       });
       
+    }).catch(function(err){
+      console.log(err);
     });
     
 };
 
+//renders main dashboard section
 function renderMain(response){
   $('#searchResults').empty()
 
@@ -54,7 +80,7 @@ var windEl = $("<p>");
 var imgEl = $("<img>");
 
 var name = response.name;
-var date = moment(response.dt, "X").format("L");
+var date = "("+moment(response.dt, "X").format("L")+")";
 var icon = response.weather[0].icon;
 var iconURL = "http://openweathermap.org/img/wn/"+icon+"@2x.png"
 var temp = Math.round(response.main.temp)+" °F";
@@ -73,13 +99,13 @@ windEl.text("Wind-speed: "+wind);
 
 };
 
+//renders UV index to main dashboard 
 function renderUV(data){
   var uvVal= data.current.uvi;
-  var UVI= "UV Index: "//+uvVal;
+  var UVI= "UV Index: ";
   var uvEl = $("<p>");
   var uvSpanEl = $("<div class='d-inline'>");
-  
-  // uvEl.append(UVI);
+
   uvEl.text(UVI).append(uvSpanEl.text(uvVal));
   
 
@@ -88,20 +114,21 @@ function renderUV(data){
   uvColor(uvVal, uvSpanEl);
 };
 
+//Color-codes UV index based on UV value
 function uvColor(uvVal, uvSpanEl){
-  
   if(uvVal >= 3 && uvVal <= 5){
     uvSpanEl.addClass('moderate');
-  }else if(uvVal >= 6 && uvVal <=7){
+  }else if(uvVal >= 5 && uvVal <=7){
     uvSpanEl.addClass('high')
-  }else if(uvVal >= 8 && uvVal <=10){
+  }else if(uvVal >= 7 && uvVal <=10){
     uvSpanEl.addClass('veryHigh')
-  }else if(uvVal > 11){
+  }else if(uvVal > 10){
     uvSpanEl.addClass('extreme')
   }
 
 };
 
+//renders 5-day forecast to dashboard
 function renderForecast(data){
  $("#fiveDay").empty();
  $("#title").text("Five Day Forecast");
@@ -130,9 +157,13 @@ function renderForecast(data){
  };
 };
 
-function makeButtons(cities){
+//renders buttons with cities entered by user, sends inpt
+function makeButtons(cityName){
  $("#btnList").empty();
- 
+ if(cityName){
+   cities.push(cityName);
+ };
+
  for(var i = 0; i < cities.length; i++){
     var btnEl = $("<button>");
     btnEl.addClass("city text-center btn btn-outline-secondary form-control");
@@ -147,27 +178,29 @@ function makeButtons(cities){
  };
 };
 
-
+//on-click handler for input-search button
 $("#searchBtn").on("click", function(e){
     e.preventDefault;
 
     if ($("#input").val() != ""){
-    var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
+    //var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
     var cityName = $("#input").val().trim();
-    cities.push(cityName);
+    
     
     $("#input").val("");
     
-   callOpenWeather(cityName);
-   makeButtons(cities); 
+   callOpenWeather(cityName,true);
+    
     }else{
       return;
     };
 });
 
+//on-click handler for generated buttons
 $(document).on("click", ".city", function(e){
   e.preventDefault;
+
   callOpenWeather($(this).text());
 });
 
-makeButtons(cities);
+// makeButtons();
