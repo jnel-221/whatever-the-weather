@@ -4,11 +4,17 @@ h4,
   padding-left: 15px;
 }
 
+/* Main viewer styling */
 .mainContainer {
   border: 3px outset orangered;
   border-radius: 5%;
+  margin-right: 10px;
 }
 
+/* 5-day forecast styling */
+#fiveDay {
+  margin-right: 10px;
+}
 .radius {
   border-radius: 10% 20%;
 }
