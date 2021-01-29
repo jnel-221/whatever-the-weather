@@ -1,9 +1,8 @@
 var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
-//var cities = [];
+
 
 //document on ready function: pulls data from local storage and renders last city entered by user, or returns if local storage is empty
 $(document).ready(function(){
-    //var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
     var recentCity = cities[cities.length-1];
     if (!cities.length){
       return;
@@ -37,12 +36,6 @@ function callOpenWeather (cityName, triggerButtons){
         // }
       }).then(function(response){
 
-        console.log(response);
-
-        // if (response.responseJSON.cod == '{"cod":"404","message":"city not found"}'){
-        //   console.log("error code 404 present!")
-        // }
-        //send response to renderDashboard function
         renderMain(response);
 
         if(triggerButtons){
@@ -87,7 +80,6 @@ var temp = Math.round(response.main.temp)+" °F";
 var humid = response.main.humidity+" %";
 var wind = Math.round(response.wind.speed)+" mph";
 
-
 cityEl.text(name+" "+date);
 imgEl.attr({"src":iconURL, "alt": "weather icon"})
 tempEl.text("Temperature: "+temp);
@@ -108,7 +100,6 @@ function renderUV(data){
 
   uvEl.text(UVI).append(uvSpanEl.text(uvVal));
   
-
   $("#searchResults").append(uvEl);
   
   uvColor(uvVal, uvSpanEl);
@@ -183,9 +174,7 @@ $("#searchBtn").on("click", function(e){
     e.preventDefault;
 
     if ($("#input").val() != ""){
-    //var cities = JSON.parse(localStorage.getItem('buttons'))|| [];
     var cityName = $("#input").val().trim();
-    
     
     $("#input").val("");
     
@@ -203,4 +192,3 @@ $(document).on("click", ".city", function(e){
   callOpenWeather($(this).text());
 });
 
-// makeButtons();
