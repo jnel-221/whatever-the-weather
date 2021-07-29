@@ -2,7 +2,7 @@
 
 ## Description
 
-An application for viewing current weather and a five-day-forecast for any city in the world!
+Planning for the weather has never been easier!  Whether the user needs a quick look at today's weather in their location, or needs the weather and forecast to aid in future travels, Weather Dashboard provides an add-free and accurate snap-shot of the weather for any city in the world.
 
 ## Resources and Functionality
 
